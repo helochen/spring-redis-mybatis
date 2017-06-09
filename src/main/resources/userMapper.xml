@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.mybatis.IUserMapper">
+    <cache type="com.chen.redisCache.RedisCache" />
+    <select id="selectUser" resultType="com.chen.mybatis.userInfo">
+        select * from USERINFO where id = #{id}
+    </select>
+
+    <select id="getUserCount" parameterMap="getUserCountMap" statementType="CALLABLE">
+        call proc(?,?)
+    </select>
+    
+    <parameterMap id="getUserCountMap"   type="java.util.Map">
+        <parameter property="id" mode="IN" jdbcType="VARCHAR"/>
+        <parameter property="user_count" mode="OUT" jdbcType="INTEGER"/>
+    </parameterMap>
+
+
+    <select id="selectAll" resultType="com.chen.mybatis.userInfo">
+        select * from USERINFO
+    </select>
+</mapper>
